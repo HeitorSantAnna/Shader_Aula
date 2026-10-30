@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Custom_Teste
-  m_Shader: {fileID: 4800000, guid: 32b106e3868f1d94596cbfe8fe23ed9a, type: 3}
+  m_Name: Fogo
+  m_Shader: {fileID: 4800000, guid: 609b4cdceb507e34b86042183c127206, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -24,17 +24,21 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 16efd2284421be246922cf6d55492ba5, type: 3}
+        m_Scale: {x: 1, y: 0.7}
+        m_Offset: {x: 0, y: 0}
+    - _TexCh:
+        m_Texture: {fileID: 2800000, guid: f12539180e900444f8a968b91b19d13c, type: 3}
+        m_Scale: {x: 1, y: 0.7}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Glossiness: 0.5
-    - _Metallic: 0
-    - _X: 4
-    - _Y: 0
-    - _Z: 0
+    - _Slider: 10
+    - _SliderF: 10
+    - _SliderX: 1
+    - _SliderY: 1
+    - _SliderZ: 1
     m_Colors:
-    - _Color: {r: 0.6320754, g: 0.056648254, b: 0.056648254, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
