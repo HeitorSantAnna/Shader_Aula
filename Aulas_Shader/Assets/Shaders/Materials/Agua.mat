@@ -31,7 +31,13 @@ Material:
     m_Floats:
     - _Glossiness: 0.5
     - _Metallic: 0
+    - _SliderA: 0
+    - _SliderC: 0
+    - _SliderX: 2
+    - _SliderY: 0
+    - _SliderZ: -10
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.10711107, g: 0.26873615, b: 0.2735849, a: 1}
+    - _ColorT: {r: 0.500623, g: 0.7573791, b: 0.8490566, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
