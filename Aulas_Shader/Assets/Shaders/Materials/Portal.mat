@@ -35,11 +35,11 @@ Material:
     - _SliderA: 9.4
     - _SliderF: 6
     - _SliderS: -1.3
-    - _SliderU: 2.9
+    - _SliderU: 2.1
     - _SliderV: -1.6
-    - _SliderX: 10
-    - _SliderY: 10
-    - _SliderZ: -10
+    - _SliderX: 5
+    - _SliderY: -6.5
+    - _SliderZ: -0.8
     m_Colors:
     - _Color: {r: 0.49056602, g: 0.17354931, b: 0.17354931, a: 1}
   m_BuildTextureStacks: []

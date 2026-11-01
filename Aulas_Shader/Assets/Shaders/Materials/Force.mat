@@ -29,12 +29,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _SliderX: 0
-    - _SliderXV: 0
-    - _SliderY: -100
-    - _SliderYV: -100
-    - _SliderZ: 0
-    - _SliderZV: 0
+    - _SliderX: 9.8
+    - _SliderXV: 0.87
+    - _SliderY: -27
+    - _SliderYV: -76
+    - _SliderZ: 3
+    - _SliderZV: -0.6
     m_Colors:
     - _Color: {r: 0, g: 1, b: 0.94670725, a: 1}
   m_BuildTextureStacks: []

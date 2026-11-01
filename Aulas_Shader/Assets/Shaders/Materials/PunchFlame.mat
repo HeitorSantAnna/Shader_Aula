@@ -31,8 +31,8 @@ Material:
     m_Floats:
     - _Glossiness: 0.5
     - _Metallic: 0
-    - _Raio: 0.355
-    - _RaioN: 0.242
+    - _Raio: 0
+    - _RaioN: 0
     - _Slider: 0
     - _Smoothness: 0.1
     - _SmoothnessN: 0.1
