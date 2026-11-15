@@ -5,6 +5,8 @@ Shader "Custom/Terrain"
         _Color ("Color", Color) = (1,1,1,1)
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
         _Slider ("Slider", Range(1, 400)) = 1
+        _Offset ("Offset (X, Y)", Vector) = (0, 0, 0, 0)
+        _Heigth ("Altura", Range(1, 10)) = 1
     }
     SubShader
     {
@@ -24,6 +26,7 @@ Shader "Custom/Terrain"
             {
                 float2 uv: TEXCOORD0;
                 float4 vertex: POSITION;
+                float3 normal: NORMAL;
             };
 
             struct v2f
@@ -35,7 +38,9 @@ Shader "Custom/Terrain"
 
             fixed4 _Color;
             float4 _MainTex_ST, _GrabTexture_ST;
-            float _Slider;
+            float _Slider, _Heigth;
+            //Usar um float para mover o offset
+            float2 _Offset;
 
             //Aqui fica o codigo do simple noise a ideia é usalo para determinar a altura e as cores
 
@@ -95,9 +100,16 @@ Shader "Custom/Terrain"
             v2f vert (appdata v)
             {
                 v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+
+                float f;
+                SimpleNoise(o.uv + _Offset, _Slider, f);
+                v.vertex.y = f * _Heigth;
+
+                o.vertex = UnityObjectToClipPos(v.vertex);
+
                 o.recorte = ComputeGrabScreenPos(v.vertex);
+                
                 return o;
             }
 
@@ -106,17 +118,9 @@ Shader "Custom/Terrain"
                 float4 col = tex2D(_MainTex, i.uv);
 
                 float f;
-                SimpleNoise(i.uv, _Slider, f);
+                SimpleNoise(i.uv + _Offset, _Slider, f);
 
-                /*if(f.r >= 0.5)
-                {
-                    return float4(1, 0, 1, 1);
-                } 
-                else
-                {
-                    return float4(0, 1, 1, 1);
-                }*/
-                return fixed4(f, 1-f, 1, 1);
+                return f;
             }
             ENDCG
         }
