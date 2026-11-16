@@ -4,9 +4,13 @@ Shader "Custom/Terrain"
     {
         _Color ("Color", Color) = (1,1,1,1)
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
+        _TexGrass ("Textura de Grama", 2D) = "white" {}
+        _TexRock ("Textura de Pedra", 2D) = "white" {}
         _Slider ("Slider", Range(1, 400)) = 1
         _Offset ("Offset (X, Y)", Vector) = (0, 0, 0, 0)
         _Heigth ("Altura", Range(1, 10)) = 1
+        _Lower ("Mais Baixo", Range(0.1, 0.3)) = 0.1
+        _Higher ("Mais Alto", Range(0.5, 1)) = 0.6
     }
     SubShader
     {
@@ -20,7 +24,7 @@ Shader "Custom/Terrain"
             #pragma vertex vert
             #include "UnityCG.cginc"
 
-            sampler2D _MainTex, _GrabTexture;
+            sampler2D _MainTex, _GrabTexture, _TexGrass, _TexRock;
 
             struct appdata
             {
@@ -38,7 +42,7 @@ Shader "Custom/Terrain"
 
             fixed4 _Color;
             float4 _MainTex_ST, _GrabTexture_ST;
-            float _Slider, _Heigth;
+            float _Slider, _Heigth, _Lower, _Higher;
             //Usar um float para mover o offset
             float2 _Offset;
 
@@ -117,10 +121,35 @@ Shader "Custom/Terrain"
             {
                 float4 col = tex2D(_MainTex, i.uv);
 
+                float4 grass = tex2D(_TexGrass, i.uv);
+
+                float4 rock = tex2D(_TexRock, i.uv);
+
                 float f;
                 SimpleNoise(i.uv + _Offset, _Slider, f);
 
-                return f;
+                /*if(f.r < _Lower)
+                {
+                    return fixed4(0, 0, 0, 1);
+                }
+                else
+                {
+                    return fixed4(f, 1-f, 1, 1);
+                }*/
+
+                if(f.r >= _Lower && f.r < _Higher)
+                {
+                    return grass;
+                } 
+                else if(f.r >= _Higher)
+                {
+                    return rock;
+                }
+                else
+                {
+                    return f;
+                }
+
             }
             ENDCG
         }

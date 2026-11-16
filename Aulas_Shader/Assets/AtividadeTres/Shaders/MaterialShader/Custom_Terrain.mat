@@ -27,9 +27,19 @@ Material:
         m_Texture: {fileID: 2800000, guid: 26e091aff8c322e47ae538ce3db902b4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _TexGrass:
+        m_Texture: {fileID: 2800000, guid: 94a9cc77d80e983419f57903e14be07b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TexRock:
+        m_Texture: {fileID: 2800000, guid: 989bf12765e3d914ab7679206ee5973d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _Heigth: 1
+    - _Higher: 0.5
+    - _Lower: 0.3
     - _Slider: 52
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
