@@ -24,11 +24,15 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 26e091aff8c322e47ae538ce3db902b4, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 9757ae3f9946f604aa06ae3ec28b7d7e, type: 3}
+        m_Scale: {x: 10, y: 10}
         m_Offset: {x: 0, y: 0}
     - _TexGrass:
         m_Texture: {fileID: 2800000, guid: 94a9cc77d80e983419f57903e14be07b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TexMoss:
+        m_Texture: {fileID: 2800000, guid: ba86c5376625e2c4d842cd839f439fed, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TexRock:
@@ -37,13 +41,16 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Heigth: 1
-    - _Higher: 0.5
+    - _Heigth: 10
+    - _Higher: 0.565
     - _Lower: 0.3
-    - _Slider: 52
+    - _Slider: 2
+    - _SliderX: 0.58
+    - _SliderY: 2.95
+    - _SliderZ: 2.57
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Offset: {r: 1.62, g: 0, b: 0, a: 0}
+    - _Offset: {r: 0, g: 0, b: 0, a: 0}
     - _ScrollSpeed: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

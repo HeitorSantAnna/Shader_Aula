@@ -6,7 +6,7 @@ Shader "Custom/Terrain"
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
         _TexGrass ("Textura de Grama", 2D) = "white" {}
         _TexRock ("Textura de Pedra", 2D) = "white" {}
-        _Slider ("Slider", Range(1, 400)) = 1
+        _TexMoss ("Textura de Musgo", 2D) = "white" {}
         _Offset ("Offset (X, Y)", Vector) = (0, 0, 0, 0)
         _Heigth ("Altura", Range(1, 10)) = 1
         _Lower ("Mais Baixo", Range(0.1, 0.3)) = 0.1
@@ -14,8 +14,6 @@ Shader "Custom/Terrain"
     }
     SubShader
     {
-        GrabPass {"_GrabTexture"}
-
         Pass
         {
             CGPROGRAM
@@ -24,7 +22,7 @@ Shader "Custom/Terrain"
             #pragma vertex vert
             #include "UnityCG.cginc"
 
-            sampler2D _MainTex, _GrabTexture, _TexGrass, _TexRock;
+            sampler2D _MainTex, _TexGrass, _TexRock, _TexMoss;
 
             struct appdata
             {
@@ -37,12 +35,14 @@ Shader "Custom/Terrain"
             {
                 float2 uv: TEXCOORD0;
                 float4 vertex: SV_POSITION;
-                float4 recorte: TEXCOORD1;
+                float3 normalWorld: TEXCOORD1;
+                float3 worldPos: TEXCOORD2;
             };
 
-            fixed4 _Color;
-            float4 _MainTex_ST, _GrabTexture_ST;
-            float _Slider, _Heigth, _Lower, _Higher;
+            float4 _MainTex_ST;
+
+            float _Heigth, _Lower, _Higher;
+
             //Usar um float para mover o offset
             float2 _Offset;
 
@@ -80,7 +80,7 @@ Shader "Custom/Terrain"
                 return t;
             }
 
-            void SimpleNoise(float2 UV, float Scale, out float Out)
+            void SimpleNoiseHeight(float2 UV, float Scale, out float Out)
             {
                 float t = 0.0;
 
@@ -99,20 +99,44 @@ Shader "Custom/Terrain"
                 Out = t;
             }
 
+            void SimpleNoiseTriplanar(float3 worldPos, float3 normal, float Scale, out float t)
+            {
+                float3 blend = abs(normal);
+
+                blend /= (blend.x + blend.y + blend.z);
+
+                float noisex, noisey, noisez;
+
+                SimpleNoiseHeight(worldPos.zy, Scale, noisex);
+                SimpleNoiseHeight(worldPos.xz, Scale, noisey);
+                SimpleNoiseHeight(worldPos.xy, Scale, noisez);
+
+                t = (noisex * blend.x + noisey * blend.y + noisez * blend.z);
+            }
+
             //Vai ate aqio o simple noise
 
             v2f vert (appdata v)
             {
                 v2f o;
+
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
 
+                float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
+
+                float3 normal = UnityObjectToWorldNormal(v.normal);
+
                 float f;
-                SimpleNoise(o.uv + _Offset, _Slider, f);
+
+                SimpleNoiseTriplanar(worldPos, normal, 1, f);
+
                 v.vertex.y = f * _Heigth;
 
                 o.vertex = UnityObjectToClipPos(v.vertex);
 
-                o.recorte = ComputeGrabScreenPos(v.vertex);
+                o.worldPos = worldPos;
+
+                o.normalWorld = normal;
                 
                 return o;
             }
@@ -125,17 +149,11 @@ Shader "Custom/Terrain"
 
                 float4 rock = tex2D(_TexRock, i.uv);
 
-                float f;
-                SimpleNoise(i.uv + _Offset, _Slider, f);
+                float4 moss = tex2D(_TexMoss, i.uv);
 
-                /*if(f.r < _Lower)
-                {
-                    return fixed4(0, 0, 0, 1);
-                }
-                else
-                {
-                    return fixed4(f, 1-f, 1, 1);
-                }*/
+                float f;
+
+                SimpleNoiseTriplanar(i.worldPos, normalize(i.normalWorld), 1, f);
 
                 if(f.r >= _Lower && f.r < _Higher)
                 {
@@ -145,11 +163,14 @@ Shader "Custom/Terrain"
                 {
                     return rock;
                 }
+                else if(f.r < _Lower && f.r > 0.1)
+                {
+                    return col;
+                }
                 else
                 {
-                    return f;
+                    return moss;
                 }
-
             }
             ENDCG
         }

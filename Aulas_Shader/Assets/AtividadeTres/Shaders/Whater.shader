@@ -5,7 +5,6 @@ Shader "Custom/Whater"
         _Color ("Color", Color) = (1,1,1,1)
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
         _Slider ("Slider", Range(0, 1)) = 0.5
-        _Slider2 ("Slider 2", Range(0, 1)) = 0.5
     }
     SubShader
     {
@@ -34,7 +33,7 @@ Shader "Custom/Whater"
 
             fixed4 _Color;
             float4 _MainTex_ST, _GrabTexture_ST;
-            float _Slider, _Slider2;
+            float _Slider;
 
             v2f vert (appdata v)
             {
@@ -49,11 +48,8 @@ Shader "Custom/Whater"
             {
                 float4 col = tex2Dproj(_GrabTexture, i.recorte); 
                 float4 col1 = tex2D(_GrabTexture, i.uv);
-                float4 col2 = tex2D(_GrabTexture, i.uv + float2(0.1, 0.1) * _Slider);
 
-                float diffi = length(col1 - col2);
-                //return step(diffi, _Slider2) * col1;
-                return 1 - col;
+                return col.r;
             }
             ENDCG
         }
