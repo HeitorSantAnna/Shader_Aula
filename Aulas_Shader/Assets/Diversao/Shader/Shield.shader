@@ -52,9 +52,9 @@ Shader "Custom/Shield"
             {
                 fixed4 col = tex2D(_MainTex, i.uv) * _Color;
 
-                float3 d = GetViewForwardDir();
+                //float3 d = GetViewForwardDir();
 
-                return d;
+                return col;
             }
             ENDCG
         }
