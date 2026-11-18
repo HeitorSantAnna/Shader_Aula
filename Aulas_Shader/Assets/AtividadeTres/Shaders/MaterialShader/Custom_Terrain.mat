@@ -42,7 +42,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _Heigth: 10
-    - _Higher: 0.565
+    - _Higher: 0.5
     - _Lower: 0.3
     - _Slider: 2
     - _SliderX: 0.58
