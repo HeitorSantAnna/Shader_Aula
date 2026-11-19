@@ -14,16 +14,30 @@ Shader "Custom/Terrain"
     }
     SubShader
     {
+        Tags { "RenderType"="Opaque" }
+
         Pass
         {
-            CGPROGRAM
+            HLSLPROGRAM
             
             #pragma fragment frag
             #pragma vertex vert
-            #include "UnityCG.cginc"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Assets/AtividadeTres/Shaders/NoiseTrip.txt"
 
-            sampler2D _MainTex, _TexGrass, _TexRock, _TexMoss;
+            //sampler2D _MainTex, _TexGrass, _TexRock, _TexMoss;
+
+            TEXTURE2D(_MainTex);
+            SAMPLER(sampler_MainTex);
+
+            TEXTURE2D(_TexGrass);
+            SAMPLER(sampler_TexGrass);
+
+            TEXTURE2D(_TexRock);
+            SAMPLER(sampler_TexRock);
+
+            TEXTURE2D(_TexMoss);
+            SAMPLER(sampler_TexMoss);
 
             struct appdata
             {
@@ -40,6 +54,7 @@ Shader "Custom/Terrain"
                 float3 worldPos: TEXCOORD2;
             };
 
+            CBUFFER_START(UnityPerMaterial)
             float4 _MainTex_ST;
 
             float _Heigth, _Lower, _Higher;
@@ -47,9 +62,7 @@ Shader "Custom/Terrain"
             //Usar um float para mover o offset
             float2 _Offset;
 
-            //Aqui fica o codigo do simple noise a ideia é usalo para determinar a altura e as cores
-
-            //Vai ate aqio o simple noise
+            CBUFFER_END
 
             v2f vert (appdata v)
             {
@@ -59,7 +72,7 @@ Shader "Custom/Terrain"
 
                 float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
 
-                float3 normal = UnityObjectToWorldNormal(v.normal);
+                float3 normal = TransformObjectToWorldNormal(v.normal);
 
                 float f;
 
@@ -67,7 +80,7 @@ Shader "Custom/Terrain"
 
                 v.vertex.y = f * _Heigth;
 
-                o.vertex = UnityObjectToClipPos(v.vertex);
+                o.vertex = TransformObjectToHClip(v.vertex);
 
                 o.worldPos = worldPos;
 
@@ -78,13 +91,13 @@ Shader "Custom/Terrain"
 
             fixed4 frag (v2f i): SV_Target
             {
-                float4 col = tex2D(_MainTex, i.uv);
+                float4 col = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
 
-                float4 grass = tex2D(_TexGrass, i.uv);
+                float4 grass = SAMPLE_TEXTURE2D(_TexGrass, sampler_TexGrass, i.uv);
 
-                float4 rock = tex2D(_TexRock, i.uv);
+                float4 rock = SAMPLE_TEXTURE2D(_TexRock, sampler_TexRock, i.uv);
 
-                float4 moss = tex2D(_TexMoss, i.uv);
+                float4 moss = SAMPLE_TEXTURE2D(_TexMoss, sampler_TexMoss, i.uv);
 
                 float f;
 
@@ -107,7 +120,7 @@ Shader "Custom/Terrain"
                     return moss;
                 }
             }
-            ENDCG
+            ENDHLSL
         }
     }
     FallBack "Diffuse"

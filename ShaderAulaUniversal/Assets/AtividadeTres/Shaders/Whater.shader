@@ -8,7 +8,7 @@ Shader "Custom/Whater"
     }
     SubShader
     {
-        GrabPass {"_GrabTexture"}
+        //GrabPass {"_GrabTexture"}
         Pass
         {
             CGPROGRAM
@@ -32,7 +32,7 @@ Shader "Custom/Whater"
             };
 
             fixed4 _Color;
-            float4 _MainTex_ST, _GrabTexture_ST;
+            float4 _MainTex_ST;// _GrabTexture_ST;
             float _Slider;
 
             v2f vert (appdata v)
@@ -40,16 +40,16 @@ Shader "Custom/Whater"
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                o.recorte = ComputeGrabScreenPos(o.vertex);
+                //o.recorte = ComputeGrabScreenPos(o.vertex);
                 return o;
             }
 
             fixed4 frag (v2f i): SV_Target
             {
-                float4 col = tex2Dproj(_GrabTexture, i.recorte); 
-                float4 col1 = tex2D(_GrabTexture, i.uv);
+                //float4 col = tex2Dproj(_GrabTexture, i.recorte); 
+                //float4 col1 = tex2D(_GrabTexture, i.uv);
 
-                return col.r;
+                return 1;
             }
             ENDCG
         }
