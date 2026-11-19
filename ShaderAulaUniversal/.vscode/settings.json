@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "ShaderAulaUniversal.sln"
+    "dotnet.defaultSolution": "ShaderAulaUniversal.slnx"
 }
