@@ -25,8 +25,6 @@ Shader "Custom/Terrain"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Assets/AtividadeTres/Shaders/NoiseTrip.txt"
 
-            //sampler2D _MainTex, _TexGrass, _TexRock, _TexMoss;
-
             TEXTURE2D(_MainTex);
             SAMPLER(sampler_MainTex);
 
@@ -55,11 +53,9 @@ Shader "Custom/Terrain"
             };
 
             CBUFFER_START(UnityPerMaterial)
+
             float4 _MainTex_ST;
-
             float _Heigth, _Lower, _Higher;
-
-            //Usar um float para mover o offset
             float2 _Offset;
 
             CBUFFER_END
@@ -70,7 +66,7 @@ Shader "Custom/Terrain"
 
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
 
-                float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
+                float3 worldPos = TransformObjectToWorld(v.vertex.xyz);
 
                 float3 normal = TransformObjectToWorldNormal(v.normal);
 
@@ -89,7 +85,7 @@ Shader "Custom/Terrain"
                 return o;
             }
 
-            fixed4 frag (v2f i): SV_Target
+            float4 frag (v2f i): SV_Target
             {
                 float4 col = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
 

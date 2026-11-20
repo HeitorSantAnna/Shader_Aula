@@ -29,8 +29,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Slider: 0.5
+    - _Alt: 0.9
+    - _Heigth: 10
+    - _Higher: 0.234
+    - _Lower: 0.3
+    - _Scale: 0.15
+    - _Slider: 3
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.30558026, g: 0.45328063, b: 0.5943396, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
