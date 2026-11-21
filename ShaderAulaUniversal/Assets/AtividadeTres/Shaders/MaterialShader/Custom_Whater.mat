@@ -30,11 +30,11 @@ Material:
     m_Ints: []
     m_Floats:
     - _Alt: 0.9
-    - _Heigth: 10
+    - _Heigth: 1
     - _Higher: 0.234
     - _Lower: 0.3
     - _Scale: 0.15
-    - _Slider: 3
+    - _Slider: 1
     m_Colors:
     - _Color: {r: 0.30558026, g: 0.45328063, b: 0.5943396, a: 1}
   m_BuildTextureStacks: []
