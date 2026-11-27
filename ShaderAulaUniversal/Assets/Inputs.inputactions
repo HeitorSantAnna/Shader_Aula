@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "name": "Inputs",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "65c7943f-ecd3-4af5-9da5-ad06cb626e9e",
+            "actions": [
+                {
+                    "name": "KeyBoard",
+                    "type": "Button",
+                    "id": "6c6deb96-abb5-4939-a918-749a55b73475",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "86d5de76-774a-4eb9-9eef-5d0f18d4bdc1",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "KeyBoard",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
